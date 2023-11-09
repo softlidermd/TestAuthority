@@ -47,13 +47,13 @@ public class RootWithIntermediateCertificateProvider : ISignerProvider
             certificateStore.SaveCertificate(RootCertificateName, rootCertificate, new PfxContainerOptions{ PfxPassword = Password});
         }
 
-        if (!certificateStore.TryGet(IntermediateCertificateName, new PfxContainerOptions{ PfxPassword = Password}, out var intermediateCertificate))
-        {
-            intermediateCertificate = GenerateIntermediateCertificate(rootCertificate);
-            certificateStore.SaveCertificate(IntermediateCertificateName, intermediateCertificate, new PfxContainerOptions{ PfxPassword = Password});
-        }
+        //if (!certificateStore.TryGet(IntermediateCertificateName, new PfxContainerOptions{ PfxPassword = Password}, out var intermediateCertificate))
+        //{
+        //    intermediateCertificate = GenerateIntermediateCertificate(rootCertificate);
+        //    certificateStore.SaveCertificate(IntermediateCertificateName, intermediateCertificate, new PfxContainerOptions{ PfxPassword = Password});
+        //}
 
-        var chain = new List<CertificateWithKey> { intermediateCertificate, rootCertificate };
+        var chain = new List<CertificateWithKey> { /*intermediateCertificate,*/ rootCertificate };
 
 
         return new CertificateSignerInfo(chain);
@@ -62,7 +62,7 @@ public class RootWithIntermediateCertificateProvider : ISignerProvider
     private CertificateWithKey GenerateIntermediateCertificate(CertificateWithKey signerCertificate)
     {
         var random = randomService.GenerateRandom();
-        var commonName = $"Intermediate Test Authority {DateTime.UtcNow:MM/yyyy}";
+        var commonName = $"WorkerDocs";
         var notBefore = DateTimeOffset.UtcNow.AddHours(-2);
         var notAfter = DateTimeOffset.UtcNow.AddYears(10);
 
@@ -93,9 +93,9 @@ public class RootWithIntermediateCertificateProvider : ISignerProvider
     private CertificateWithKey GenerateRootCertificate()
     {
         var random = randomService.GenerateRandom();
-        var commonName = $"Test Authority {DateTime.UtcNow:MM/yyyy}";
+        var commonName = $"Soft Lider ROOT CA";
         var notBefore = DateTimeOffset.UtcNow.AddHours(-2);
-        var notAfter = DateTimeOffset.UtcNow.AddYears(15);
+        var notAfter = DateTimeOffset.UtcNow.AddYears(20);
 
         var builder = builderFactory(random);
 

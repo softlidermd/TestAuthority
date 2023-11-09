@@ -15,8 +15,8 @@ public class CertificateRequestValidator : AbstractValidator<Contracts.Certifica
     {
         RuleFor(x => x.CommonName)
             .NotEmpty().WithMessage("You must provide a Common Name");
-        RuleFor(x => x)
-            .Must(AnyHostnamesOrIpAddresses).WithMessage("You must provide at least one hostname or IP address.");
+        //RuleFor(x => x)
+        //    .Must(AnyHostnamesOrIpAddresses).WithMessage("You must provide at least one hostname or IP address.");
         RuleFor(x => x.Password)
             .MinimumLength(1).When(x => x.Format == OutputFormat.Pfx)
             .WithMessage("You must provide a password for PFX");

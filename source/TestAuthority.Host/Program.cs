@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using TestAuthority.Application;
 using TestAuthority.Application.Random;
@@ -43,7 +44,7 @@ builder.Services.AddCrlGenerationPipeline();
 builder.Services.Configure<CrlSettings>(builder.Configuration.GetSection("CrlSettings"));
 builder.Configuration.AddEnvironmentVariables();
 
-
+builder.Host.UseWindowsService();
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI(

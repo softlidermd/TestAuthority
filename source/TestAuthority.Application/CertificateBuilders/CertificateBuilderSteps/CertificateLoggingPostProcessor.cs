@@ -28,10 +28,10 @@ public class CertificateLoggingPostProcessor: IRequestPostProcessor<CertificateB
         sb.AppendLine($"Serial Number {certificate.SerialNumber}");
         sb.AppendLine("Extensions:");
         sb.AppendLine("  Subject Alternative Name");
-        foreach (ArrayList subjectAlternativeName in certificate.GetSubjectAlternativeNames())
-        {
-            sb.AppendLine($"    - {subjectAlternativeName[1]}");
-        }
+        //foreach (ArrayList subjectAlternativeName in certificate.GetSubjectAlternativeNames())
+        //{
+        //    sb.AppendLine($"    - {subjectAlternativeName[1]}");
+        //}
         logger.LogInformation("{CertificateInformation}",sb.ToString());
         return Task.CompletedTask;
     }

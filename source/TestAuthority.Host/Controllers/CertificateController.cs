@@ -58,8 +58,8 @@ public class CertificateController : Controller
         var certificateRequest = new Domain.Models.CertificateRequestModel
         {
             CommonName = request.CommonName,
-            Hostnames = request.Hostname.ToList(),
-            IpAddresses = request.IpAddress.ToList(),
+            //Hostnames = request.Hostname.ToList(),
+            //IpAddresses = request.IpAddress.ToList(),
             ValidityInDays = request.ValidityInDays
         };
 

@@ -37,8 +37,10 @@ public class GenerateCrlBehaviour : IPipelineBehavior<CrlBuilderRequest, CrlFile
             false,
             new AuthorityKeyIdentifierStructure(signerInfo.GetPublicKey()));
 
-        var crlNumber = new BigInteger(timeServer.Now.ToString("yyyyMMddHHmm"));
-        request.CrlGenerator.AddExtension(X509Extensions.CrlNumber, false, new CrlNumber(crlNumber));
+        var crlNumber = BitConverter.ToInt64(Convert.FromHexString(((request.SerialNumber.Length % 2 != 0) ? "0" : "") + request.SerialNumber)).ToString() + timeServer.Now.ToString("yyyyMMddHHmm");
+
+        //    //new BigInteger(timeServer.Now.Ticks.ToString()/*timeServer.Now.ToString("yyyyMMddHHmm")*/);
+        request.CrlGenerator.AddExtension(X509Extensions.CrlNumber, false, new CrlNumber(new BigInteger(crlNumber)));
 
         var crl = signatureFactoryProvider.Generate(request.CrlGenerator);
         var result = new CrlFileModel(crl);

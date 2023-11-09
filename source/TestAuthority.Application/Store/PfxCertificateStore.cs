@@ -69,10 +69,14 @@ public class PfxCertificateStore : ICertificateStore
 
     private static string GetCertificatePath(ReadOnlySpan<char> certificateName)
     {
+        var directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments), "SoftLider-authority");
+        if (!Directory.Exists(directory))
+            Directory.CreateDirectory(directory);
+
         var sb = new StringBuilder();
         sb.Append(certificateName);
         sb.Append(".pfx");
-        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "test-authority", sb.ToString());
+        return Path.Combine(directory, sb.ToString());
     }
 
     private static CertificateWithKey Convert(byte[] pfxCertificate, ReadOnlySpan<char> password)
